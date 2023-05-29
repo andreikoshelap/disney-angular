@@ -1,34 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from "@angular/cdk/collections";
-// import {SiteModel} from "../../model/site.model";
+import {SiteModel} from "../../model/site.model";
+import {SiteService} from "../../serices/site.service";
+import {SiteSearch} from "../search/site-search-model";
 
-export interface SiteModel {
-  position: number;
-  name : string;
-  description : string
-}
-// export interface PeriodicElement {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }
-
-const ELEMENT_DATA: SiteModel[] = [
-  {position: 1, name: 'Hydrogen', description: 'H'},
-  {position: 2, name: 'Helium',  description: 'He'},
-  {position: 3, name: 'Lithium',  description: 'Li'},
-  {position: 4, name: 'Beryllium',  description: 'Be'},
-
-];
-// const ELEMENT_DATA: SiteModel[] = [
-//     {position: 1, name: 'West', description: 'West'},
-//     {position: 2, name: 'Helium', description: 'West'},
-//     {position: 3, name: 'Lithium', description: 'West'},
-//     {position: 4, name: 'Beryllium', description: 'West'},
-//   ];
 
 @Component({
   selector: 'app-site',
@@ -36,10 +12,9 @@ const ELEMENT_DATA: SiteModel[] = [
   styleUrls: ['./site.component.scss'],
 })
 export class SiteComponent implements OnInit{
-  // displayedColumns: string[] = ['select', 'position', 'name', 'description'];
   displayedColumns: string[] = ['select', 'position', 'name', 'description'];
 
-  dataSource = new MatTableDataSource<SiteModel>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<SiteModel>();
   selection = new SelectionModel<SiteModel>(true, []);
 
   ngAfterViewInit() {
@@ -69,7 +44,13 @@ export class SiteComponent implements OnInit{
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
-constructor() {
+
+  searchModel: SiteSearch = {name: null, page: 1, pageSize:5};
+
+constructor(private siteService: SiteService) {
+    this.siteService.getSites(this.searchModel).subscribe(data=> {
+      this.dataSource.data = data.siteList;
+    });
 }
 
 ngOnInit() {
