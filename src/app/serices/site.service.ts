@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {SiteModel} from "../model/site.model";
 import {SharedService} from "./shared.service";
 import {HttpClient} from "@angular/common/http";
 import {SiteSearch} from "../components/search/site-search-model";

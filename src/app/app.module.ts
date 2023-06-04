@@ -11,11 +11,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SiteComponent } from './components/site/site.component';
+import { TicketComponent } from './components/ticket/ticket.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SiteComponent
+    SiteComponent,
+    TicketComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,9 @@ import { SiteComponent } from './components/site/site.component';
     MatFormFieldModule,
     MatButtonModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

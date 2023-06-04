@@ -11,15 +11,12 @@ import {SiteSearch} from "../search/site-search-model";
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.scss'],
 })
-export class SiteComponent implements OnInit{
+export class SiteComponent implements OnInit {
   displayedColumns: string[] = ['select', 'position', 'name', 'description'];
 
   dataSource = new MatTableDataSource<SiteModel>();
   selection = new SelectionModel<SiteModel>(true, []);
 
-  ngAfterViewInit() {
-    // this.dataSource.data = this.service.getSite();
-  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -45,14 +42,14 @@ export class SiteComponent implements OnInit{
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  searchModel: SiteSearch = {name: null, page: 1, pageSize:5};
+  searchModel: SiteSearch = {name: null, page: 1, pageSize: 5};
 
-constructor(private siteService: SiteService) {
-    this.siteService.getSites(this.searchModel).subscribe(data=> {
+  constructor(private siteService: SiteService) {
+    this.siteService.getSites(this.searchModel).subscribe(data => {
       this.dataSource.data = data.siteList;
     });
-}
+  }
 
-ngOnInit() {
-}
+  ngOnInit() {
+  }
 }
